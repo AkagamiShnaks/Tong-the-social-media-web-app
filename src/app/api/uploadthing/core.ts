@@ -1,3 +1,4 @@
+
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import streamServerClient from "@/lib/stream";
@@ -18,30 +19,26 @@ export const fileRouter = {
       return { user };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      const fileKey = file.key;
-      const newAvatarUrl = file.url;
+      const oldAvatarUrl = metadata.user.avatarUrl;
 
-      if (!fileKey) {
-        console.warn("No file key received from UploadThing.");
-        return;
+      if (oldAvatarUrl) {
+        const key = oldAvatarUrl.split(
+          `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
+        )[1];
+
+        await new UTApi().deleteFiles(key);
       }
 
-      const oldAvatarKey = metadata.user.avatarKey;
-
-      if (oldAvatarKey) {
-        try {
-          await new UTApi().deleteFiles(oldAvatarKey);
-        } catch (err) {
-          console.error("Failed to delete old avatar:", err);
-        }
-      }
+      const newAvatarUrl = file.url.replace(
+        "/f/",
+        `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
+      );
 
       await Promise.all([
         prisma.user.update({
           where: { id: metadata.user.id },
           data: {
             avatarUrl: newAvatarUrl,
-            avatarKey: fileKey, // <-- store key for future deletion
           },
         }),
         streamServerClient.partialUpdateUser({
@@ -54,7 +51,6 @@ export const fileRouter = {
 
       return { avatarUrl: newAvatarUrl };
     }),
-
   attachment: f({
     image: { maxFileSize: "4MB", maxFileCount: 5 },
     video: { maxFileSize: "64MB", maxFileCount: 5 },
@@ -69,7 +65,10 @@ export const fileRouter = {
     .onUploadComplete(async ({ file }) => {
       const media = await prisma.media.create({
         data: {
-          url: file.url,
+          url: file.url.replace(
+            "/f/",
+            `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
+          ),
           type: file.type.startsWith("image") ? "IMAGE" : "VIDEO",
         },
       });
