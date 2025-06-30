@@ -1,4 +1,3 @@
-
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import streamServerClient from "@/lib/stream";
@@ -26,7 +25,9 @@ export const fileRouter = {
           `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
         )[1];
 
-        await new UTApi().deleteFiles(key);
+        if (key) {
+          await new UTApi().deleteFiles(key);
+        }
       }
 
       const newAvatarUrl = file.url.replace(
