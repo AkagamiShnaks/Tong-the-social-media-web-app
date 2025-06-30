@@ -17,7 +17,7 @@ export default function Bookmarks() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["post-feed", "saved"],
+    queryKey: ["post-feed", "bookmarks"],
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
@@ -38,7 +38,7 @@ export default function Bookmarks() {
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
       <p className="text-center text-muted-foreground">
-        You don&apos;t have any saved yet.
+        You don&apos;t have any bookmarks yet.
       </p>
     );
   }
@@ -46,7 +46,7 @@ export default function Bookmarks() {
   if (status === "error") {
     return (
       <p className="text-center text-destructive">
-        An error occurred while loading saved.
+        An error occurred while loading bookmarks.
       </p>
     );
   }

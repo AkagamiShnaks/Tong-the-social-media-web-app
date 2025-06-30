@@ -19,10 +19,10 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Tong",
-    default: "Tong",
+    template: "%s | tong",
+    default: "tong",
   },
-  description: "The social media app for powernerds",
+  description: "The social media app for friends",
 };
 
 export default function RootLayout({
@@ -32,9 +32,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/coffee.ico" />
-      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />
         <ReactQueryProvider>

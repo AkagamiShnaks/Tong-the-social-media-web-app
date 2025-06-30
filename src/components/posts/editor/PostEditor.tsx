@@ -43,7 +43,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "Tea's ready, stories are flowing — where are you?",
+        placeholder: "What's crack-a-lackin'?",
       }),
     ],
   });
