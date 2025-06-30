@@ -1,7 +1,7 @@
 # 🫖 Tong – A Social Media Web App Inspired by Bangladeshi Tea Stalls
 
 Tong is a digital space inspired by the cultural essence of Bangladeshi **tong** (tea stalls) — places where people gather to share stories, laugh, debate, and connect over a cup of tea.  
-This app recreates that experience online by allowing users to post, connect, and converse in a way that’s deeply local and truly social.
+This app recreates that experience online by allowing users to post, connect, and converse in a way that's deeply local and truly social.
 
 ## 🚀 Features
 
