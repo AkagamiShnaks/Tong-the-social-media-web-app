@@ -11,12 +11,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "utfs.io",
-        pathname: "/f/*", // ✅ UploadThing file hosting
-      },
-      {
-        protocol: "https",
-        hostname: "uploadthing.com",
-        pathname: "/f/*", // ✅ Optional fallback
+        pathname: `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/*`,
       },
     ],
   },
